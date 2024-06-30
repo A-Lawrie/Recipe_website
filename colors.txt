@@ -1,0 +1,13 @@
+Almost white: #f3eeea
+Light brown: #e8dbd3
+Medium brown: #aa7d7a
+Dark brown: #75474a
+
+
+
+
+Color codes (top to bottom)
+Dark Brown: #A79277
+Medium Brown: #D1BB9E
+Light Brown: #EAD8C0
+Lightest Brown: #FFF2E1
