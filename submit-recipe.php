@@ -1,14 +1,14 @@
 <?php
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $database ='recipe_website';
+session_start();
 
-    //create the connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: ". mysqli_connect_error());
+    include('db-connect.php');
+
+    if (!isset($_SESSION['username'])) {
+        echo '<script type="text/javascript">';
+        echo 'alert("You need to be logged in to submit a recipe.");';
+        echo 'window.location.href = "sign-in.php";';
+        echo '</script>';
+        exit();
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -39,7 +39,21 @@
     }
     }
 
-    //Function to prevent malicious attact by sanitizing the input
+    $username = $_SESSION['username'];
+    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->bind_result($user_id);
+    $stmt->fetch();
+    $stmt->close();
+
+    if (empty($user_id)) {
+        echo "User ID not found.<br>";
+        exit();
+    }
+
+    
+
     function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);
@@ -47,17 +61,20 @@
         return $data;
     }
 
-    $sql = "INSERT INTO recipes (FoodName, OwnerName, Ingredients, Steps, Category, food_photo)
-    VALUES('$name', '$owner', '$ingredients', '$steps', '$category', '$file_path')";
+    $sql = "INSERT INTO recipes (FoodName, OwnerName, Ingredients, Steps, Category, food_photo, id)
+            VALUES(?, ?, ?, ?, ?, ?, ?)";
 
-if(mysqli_query($conn, $sql)){
-    echo '<script type="text/javascript">';
-    echo 'alert("New recipe created successfully");';
-    echo 'window.location.href = "index.html";'; // Redirect after alert
-    echo '</script>';
-} else {
-    echo "Error " . $sql. "<br>".mysqli_error($conn);
-}
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssi", $name, $owner, $ingredients, $steps, $category, $file_path, $user_id);
+    if ($stmt->execute()) {
+        echo '<script type="text/javascript">';
+        echo 'alert("New recipe created successfully");';
+        echo 'window.location.href = "index.html";';
+        echo '</script>';
+    } else {
+        echo "Error: " . $stmt->error . "<br>";
+    }
+        $stmt->close();
 
     mysqli_close($conn);
 ?>
