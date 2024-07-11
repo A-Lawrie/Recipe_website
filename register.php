@@ -1,16 +1,6 @@
 <?php
 
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $database = 'recipe_website';
-
-    //create the connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: ". mysqli_connect_error());
-    }
+    include('db-connect.php');
     
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

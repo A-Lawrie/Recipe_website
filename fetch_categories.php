@@ -1,16 +1,5 @@
 <?php
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $database ='recipe_website';
-
-    // Create connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: ". mysqli_connect_error());
-    }
+    include('db-connect.php');
 
     // Fetch categories from database
     $sql = "SELECT category FROM category";

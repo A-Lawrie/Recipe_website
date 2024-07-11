@@ -1,15 +1,6 @@
 <?php
 
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$database = 'recipe_website';
-
-$mysqli = new mysqli($servername, $username, $password, $database);
-
-if ($mysqli->connect_error) {
-    die("Connection failed: " . $mysqli->connect_error);
-}
+include('db-connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];

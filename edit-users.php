@@ -1,15 +1,6 @@
 <?php
 
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$database = 'recipe_website';
-
-$mysqli = new mysqli($servername, $username, $password, $database);
-
-if (!$mysqli) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+include('db-connect.php');
 
 $sql = "SELECT * FROM users ORDER BY name DESC";
 $result = $mysqli->query($sql);

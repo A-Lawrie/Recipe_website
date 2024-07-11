@@ -1,20 +1,8 @@
 <?php
-    $servername = 'localhost';
-    $username = 'root';
-    $password = '';
-    $database ='recipe_website';
+    include('db-connect.php');
 
-    //create the connection
-    $conn = mysqli_connect($servername, $username, $password, $database);
-    // Check connection
-    if (!$conn) {
-        die("Connection failed: ". mysqli_connect_error());
-    }
-
-    // Retrieve form data
     $category = $_POST["category"];
 
-    //add to table
     $sql = "INSERT INTO category (category) VALUES ('$category')";
 
     if(mysqli_query($conn, $sql)){
