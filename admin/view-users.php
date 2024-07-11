@@ -71,7 +71,7 @@ $mysqli->close();
         </table>
 
         <div class="links">
-            <a href="edit-users.php">Update user data</a>
+            <a href="../edit-users.php">Update user data</a>
             <a href="index.html">Back to home</a>
         </div>
 

@@ -3,8 +3,8 @@
 include('db-connect.php');
 
 $sql = "SELECT * FROM users ORDER BY name DESC";
-$result = $mysqli->query($sql);
-$mysqli->close();
+$result = $conn->query($sql);
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@ $mysqli->close();
     <title>View Users</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/view-users.css">
+    <link rel="stylesheet" href="admin/view-users.css">
 </head>
 <body>
     <section>

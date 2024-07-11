@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $profile_photo = $_POST['profile_photo'];
     $role = $_POST['role'];
 
-    $stmt = $mysqli->prepare("UPDATE users SET name=?, email=?, username=?, profile_photo=?, role=? WHERE id=?");
+    $stmt = $conn->prepare("UPDATE users SET name=?, email=?, username=?, profile_photo=?, role=? WHERE id=?");
     $stmt->bind_param("sssssi", $name, $email, $username, $profile_photo, $role, $id);
 
     if ($stmt->execute()) {
@@ -20,10 +20,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $stmt->close();
-    $mysqli->close();
+    $conn->close();
 
-    // Redirect back to the view users page
-    header("Location: view-users.php");
+    header("Location: admin/view-users.php");
     exit();
 }
 ?>
