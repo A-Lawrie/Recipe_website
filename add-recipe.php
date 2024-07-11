@@ -19,15 +19,8 @@ $category = $category_qry->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <nav>
-        <div id="logo" class="logo">
-            <a href="index.html"><h1>CHEF LAWRIE</h1></a>
-        </div>
-        <div class="navigations">
-            <a href="#">Recipes</a>
-            <input class="add-recipe" type="submit" value="Add a Recipe">
-        </div>
-    </nav>
+    <?php include 'nav.html' ; ?>
+    
     <div class="main">
         <form class="recipe-add" action="submit-recipe.php" method="post" enctype="multipart/form-data">
             <label for="name">Food name</label>
