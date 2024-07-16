@@ -13,8 +13,7 @@ try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
     if ($recipe_id) {
-        // Join recipes table with category table to get the category name
-        $stmt = $pdo->prepare('SELECT recipes.*, category.Category as CategoryName FROM recipes JOIN category ON recipes.Category = category.CategoryID WHERE recipes.RecipeID = ?');
+        $stmt = $pdo->prepare('SELECT * FROM recipes WHERE RecipeID = ?');
         $stmt->execute([$recipe_id]);
         $recipe = $stmt->fetch();
 
@@ -75,12 +74,12 @@ $category = $category_qry->fetch_all(MYSQLI_ASSOC);
 
             <label for="category">Category:</label>
             <select required id="category" name="category">
-                <option value="<?php echo htmlspecialchars($recipe['Category']); ?>"><?php echo htmlspecialchars($recipe['CategoryName']); ?></option>
-                <?php foreach ($category as $row): ?>
-                    <option value="<?php echo htmlspecialchars($row['CategoryID']); ?>" <?php echo ($row['CategoryID'] == $recipe['Category']) ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($row['Category']); ?>
-                    </option>
-                <?php endforeach; ?>
+                <option value=""><?php echo htmlspecialchars($recipe['Category'] ?? ''); ?></option>
+                <?php
+                    foreach($category as $row) {
+                        echo "<option value='{$row['id']}'>{$row['Category']}</option>";
+                    }
+                ?>
             </select>
 
             <input class="Submit-btn" type="submit" value="Update Recipe">
@@ -88,10 +87,9 @@ $category = $category_qry->fetch_all(MYSQLI_ASSOC);
     </div>
 
     <script>
-        // JavaScript function to handle input of food photo
         function previewFile() {
-            var preview = document.querySelector('img'); // selects the query named img
-            var file    = document.querySelector('input[type=file]').files[0]; // same as here
+            var preview = document.querySelector('img');
+            var file    = document.querySelector('input[type=file]').files[0];
             var reader  = new FileReader();
 
             reader.onloadend = function () {

@@ -1,3 +1,18 @@
+<?php
+require 'config.php';
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+
+    // select three recipes at random
+    $top_picks_stmt = $pdo->query('SELECT * FROM recipes ORDER BY RAND() LIMIT 3');
+    $top_picks = $top_picks_stmt->fetchAll();
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    die();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +25,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src="toggle.js"></script>
 </head>
 <body>
     <?php include 'nav.html' ; ?>
@@ -61,6 +75,25 @@
           </div>
         </div>
 </section>
+
+<section id="top-picks">
+        <h1>Top Picks</h1>
+        <div class="top-picks-container">
+            <?php foreach ($top_picks as $recipe): ?>
+                <div class="recipe-card">
+                    <a href="recipe.php?RecipeID=<?php echo htmlspecialchars($recipe['RecipeID']); ?>">
+                        <img src="<?php echo htmlspecialchars($recipe['food_photo']); ?>" alt="<?php echo htmlspecialchars($recipe['FoodName']); ?>">
+                    </a>
+                    <div class="content">
+                        <h3><?php echo htmlspecialchars($recipe['FoodName']); ?></h3>
+                        <p><?php echo htmlspecialchars($recipe['Category']); ?></p>
+                        <a href="recipe.php?RecipeID=<?php echo htmlspecialchars($recipe['RecipeID']); ?>">See Recipe</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <a href="recipes.php">See all recipes</a>
+    </section>
 
     <script>
         function showSidebar(){

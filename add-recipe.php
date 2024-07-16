@@ -25,14 +25,11 @@ $category = $category_qry->fetch_all(MYSQLI_ASSOC);
         <form class="recipe-add" action="submit-recipe.php" method="post" enctype="multipart/form-data">
             <label for="name">Food name</label>
             <input required type="text" name="name" id="name" placeholder="E.g. Pancakes">
-            <!-- input to select food photo -->
             <label for="file-upload" class="custom-file-upload">
                 <img class="image-upload" src="img/camera.png" alt="">
                 <input required type="file" id="food-photo" name="food-photo" accept="image/*" />
                 <script src="script.js"></script>
             </label>
-            <label for="owner">Recipe Owner Name</label>
-            <input required type="text" id="owner" name="owner" placeholder=" E.g. John Doe">
             <label for="ingredients">Ingredients</label>
             <textarea required class="textbox" name="ingredients" id="ingredients" placeholder="
 1 cup all-purpose flour
@@ -57,10 +54,9 @@ In another bowl, whisk together the egg, milk, melted butter and vanilla extract
     </div>
 
     <script>
-        // JavaScript function to handle input of food photo
         function previewFile() {
-            var preview = document.querySelector('img'); // selects the query named img
-            var file    = document.querySelector('input[type=file]').files[0]; // same as here
+            var preview = document.querySelector('img'); 
+            var file    = document.querySelector('input[type=file]').files[0];
             var reader  = new FileReader();
         
             reader.onloadend = function () {
@@ -68,7 +64,7 @@ In another bowl, whisk together the egg, milk, melted butter and vanilla extract
             }
         
             if (file) {
-              reader.readAsDataURL(file); // reads the data as a URL
+              reader.readAsDataURL(file);
             } else {
               preview.src = "";
             }

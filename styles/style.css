@@ -88,7 +88,7 @@ header {
     font-weight: 500;
   }
   
-  .about-us h1{
+h1{
     font-size:34px;
     color:black;
     text-align:center;
@@ -123,6 +123,36 @@ header {
     height:200px;
     text-align: left;
   }
+
+  /*Top picks*/
+  .top-picks-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .top-picks-container .recipe-card{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px;
+    width: 20%;
+    height: 20%;
+  }
+
+  .top-picks-container .recipe-card img{
+    width: 100%;
+    height: 300px;
+  }
+
+  .top-picks-container .recipe-card .content{
+    padding: 20px;
+    text-align: left;
+    font-size: 18px;
+  }
+
 
   /*Recipes page */
   .container {

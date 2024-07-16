@@ -44,8 +44,6 @@ try {
             <h1><?php echo htmlspecialchars($recipe['FoodName']); ?></h1>
             <img src="<?php echo htmlspecialchars($recipe['food_photo']); ?>" alt="<?php echo htmlspecialchars($recipe['FoodName']); ?>">
 
-            <p><strong>Owner Name:</strong></p>
-            <p><?php echo htmlspecialchars($recipe['OwnerName']); ?></p>
             <p><strong>Ingredients:</strong></p>
             <p><?php echo htmlspecialchars($recipe['Ingredients']); ?></p>
             <p><strong>Steps:</strong></p>

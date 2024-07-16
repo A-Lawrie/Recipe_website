@@ -38,7 +38,7 @@ try {
                     </div>
                     <a href="recipe.php?RecipeID=<?php echo htmlspecialchars($recipe['RecipeID']); ?>">
                         <h2><?php echo htmlspecialchars($recipe['FoodName']); ?></h2>
-                        <div class="author"><?php echo htmlspecialchars($recipe ['OwnerName']); ?></div>
+                        <div class="time"><?php echo htmlspecialchars($recipe['CreatedAt']);?></div>
                         <a href="recipe.php?RecipeID=<?php echo htmlspecialchars($recipe    ['RecipeID']); ?>">See Recipe</a>
                     </a>
                 </div>

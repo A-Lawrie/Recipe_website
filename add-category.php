@@ -8,7 +8,7 @@
     if(mysqli_query($conn, $sql)){
         echo '<script type="text/javascript">';
         echo 'alert("New category created successfully");';
-        echo 'window.location.href = "index.html";'; // Redirect after alert
+        echo 'window.location.href = "index.html";';
         echo '</script>';
     } else {
         echo "Error " . $sql. "<br>".mysqli_error($conn);

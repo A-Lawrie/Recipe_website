@@ -13,7 +13,6 @@ session_start();
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $name = $_POST["name"];
-        $owner = $_POST["owner"];
         $ingredients = $_POST["ingredients"];
         $steps = $_POST["steps"];
         $category = $_POST["category"];
@@ -61,15 +60,15 @@ session_start();
         return $data;
     }
 
-    $sql = "INSERT INTO recipes (FoodName, OwnerName, Ingredients, Steps, Category, food_photo, id)
-            VALUES(?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO recipes (FoodName, Ingredients, Steps, Category, food_photo, id)
+            VALUES(?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssi", $name, $owner, $ingredients, $steps, $category, $file_path, $user_id);
+    $stmt->bind_param("sssssi", $name, $ingredients, $steps, $category, $file_path, $user_id);
     if ($stmt->execute()) {
         echo '<script type="text/javascript">';
         echo 'alert("New recipe created successfully");';
-        echo 'window.location.href = "index.html";';
+        echo 'window.location.href = "recipe-owner.php";';
         echo '</script>';
     } else {
         echo "Error: " . $stmt->error . "<br>";
