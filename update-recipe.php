@@ -25,7 +25,7 @@ try {
         $category = $_POST['category'];
         $food_photo = ''; 
 
-        
+        // Handle photo upload
         if (!empty($_FILES['food-photo']['name'])) {
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["food-photo"]["name"]);
@@ -33,8 +33,10 @@ try {
                 $food_photo = $target_file; 
             } else {
                 echo "Sorry, there was an error uploading your file.";
+                exit();
             }
         } else {
+            // Use existing photo if no new photo is uploaded
             $stmt = $pdo->prepare('SELECT food_photo FROM recipes WHERE RecipeID = :recipe_id');
             $stmt->execute(['recipe_id' => $recipe_id]);
             $current_recipe = $stmt->fetch();

@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($users['role'] == 'Owner' || $users['role'] == 2){
             header("Location: recipe-owner.php");
         } elseif ($users['role'] == 'user' || $users['role'] == 1 || $users['role'] == 'User'){
-            header("Location: index.html");
+            header("Location: index.php");
         } else {
             echo "<script>alert('Login failed. Invalid username or password. Please sign up if you do not have an account.');</script>";
             echo "<script>window.location.href = 'sign-up.php';</script>";

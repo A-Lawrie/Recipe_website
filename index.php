@@ -29,18 +29,17 @@
                     <li>Get help where you are stuck</li>
                 </ul>
                 <div class="buttons">
-                    <a href="sign-up.html"><button class="sign-up">Sign up</button></a>
-                    <a href="sign-in.html"><button class="sign-in">Sign in</button></a>
+                    <a href="sign-up.php"><button class="sign-up">Sign up</button></a>
+                    <a href="sign-in.php"><button class="sign-in">Sign in</button></a>
                 </div>
             </div>
             <div class="landing-image">
-
+                <img src="img/ramsay.jpg" alt="">
             </div>
         </main>
     </section>
     <section id="about" class="about-us">
         <h1>WHY CHOOSE US</h1>
-    <hr/>
         <div class="why-us">
             <div class="column-1">
                 <h2>DELICIOUS EXPERTISE</h2>
@@ -62,7 +61,6 @@
           </div>
         </div>
 </section>
-<a href="carbonara.html">Go to carbonara</a>
 
     <script>
         function showSidebar(){

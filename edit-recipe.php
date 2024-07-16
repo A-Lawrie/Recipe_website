@@ -12,23 +12,26 @@ $recipe_id = isset($_GET['RecipeID']) ? (int)$_GET['RecipeID'] : 0;
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 
-    // Fetch the recipe details
-    $stmt = $pdo->prepare('SELECT * FROM recipes WHERE RecipeID = :recipe_id AND id = :user_id');
-    $stmt->execute(['recipe_id' => $recipe_id, 'user_id' => $_SESSION['user_id']]);
-    $recipe = $stmt->fetch();
+    if ($recipe_id) {
+        // Join recipes table with category table to get the category name
+        $stmt = $pdo->prepare('SELECT recipes.*, category.Category as CategoryName FROM recipes JOIN category ON recipes.Category = category.CategoryID WHERE recipes.RecipeID = ?');
+        $stmt->execute([$recipe_id]);
+        $recipe = $stmt->fetch();
 
-    if (!$recipe) {
-        echo "Recipe not found.";
-        echo "<br>Debug Info: RecipeID: $recipe_id, UserID: {$_SESSION['user_id']}";
-        exit();
+        if (!$recipe) {
+            echo 'Recipe not found.';
+            die();
+        }
+    } else {
+        echo 'No recipe ID provided.';
+        die();
     }
-
 } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
     die();
 }
 
-require_once('db-connect.php'); 
+require_once('db-connect.php');
 
 $category_qry = $conn->query("SELECT * FROM `category` ORDER BY `Category` ASC");
 $category = $category_qry->fetch_all(MYSQLI_ASSOC);
@@ -53,34 +56,54 @@ $category = $category_qry->fetch_all(MYSQLI_ASSOC);
             <input type="hidden" name="recipe_id" value="<?php echo $recipe_id; ?>">
             
             <label for="food_name">Food Name:</label>
-            <input type="text" id="food_name" name="food_name" value="<?php echo htmlspecialchars($recipe['FoodName'] ?? ''); ?>" required>
+            <input type="text" id="food_name" name="food_name" value="<?php echo htmlspecialchars($recipe['FoodName']); ?>" required>
+
+            <label for="current_food_photo">Current Food Photo:</label><br>
+            <img src="<?php echo htmlspecialchars($recipe['food_photo']); ?>" alt="Current Food Photo" width="200"><br>
 
             <label for="food_photo">Upload New Food Photo:</label>
             <label for="file-upload" class="custom-file-upload">
-                <img id="current-photo" class="image-upload" src="<?php echo htmlspecialchars($recipe['food_photo']); ?>" alt="">
+                <img class="image-upload" src="img/camera.png" alt="">
                 <input type="file" id="food-photo" name="food-photo" accept="image/*" />
             </label>
-            
+
             <label for="ingredients">Ingredients:</label>
-            <textarea class="textbox" id="ingredients" name="ingredients" required><?php echo htmlspecialchars($recipe['Ingredients'] ?? ''); ?></textarea>
-            
-            <label for="instructions">Steps:</label>
-            <textarea class="textbox" id="steps" name="steps" required><?php echo htmlspecialchars($recipe['Steps'] ?? ''); ?></textarea>
+            <textarea id="ingredients" name="ingredients" required><?php echo htmlspecialchars($recipe['Ingredients']); ?></textarea>
+
+            <label for="steps">Steps:</label>
+            <textarea id="steps" name="steps" required><?php echo htmlspecialchars($recipe['Steps']); ?></textarea>
 
             <label for="category">Category:</label>
-           
             <select required id="category" name="category">
-            <option value="">Select Category</option>
-            <?php foreach ($category as $row): ?>
-                <option value="<?php echo htmlspecialchars($row['CategoryID']); ?>" <?php echo ($row['CategoryID'] == $recipe['Category']) ? 'selected' : ''; ?>>
-                    <?php echo htmlspecialchars($row['Category']); ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
+                <option value="<?php echo htmlspecialchars($recipe['Category']); ?>"><?php echo htmlspecialchars($recipe['CategoryName']); ?></option>
+                <?php foreach ($category as $row): ?>
+                    <option value="<?php echo htmlspecialchars($row['CategoryID']); ?>" <?php echo ($row['CategoryID'] == $recipe['Category']) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($row['Category']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
             <input class="Submit-btn" type="submit" value="Update Recipe">
         </form>
     </div>
+
+    <script>
+        // JavaScript function to handle input of food photo
+        function previewFile() {
+            var preview = document.querySelector('img'); // selects the query named img
+            var file    = document.querySelector('input[type=file]').files[0]; // same as here
+            var reader  = new FileReader();
+
+            reader.onloadend = function () {
+                preview.src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = "";
+            }
+        }
+    </script>
 </body>
 </html>
