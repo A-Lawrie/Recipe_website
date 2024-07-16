@@ -183,3 +183,7 @@ select{
   border: none;
   text-align: center;
 }
+#current-photo{
+  height: 80px;
+  width: 80px;
+}
